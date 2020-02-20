@@ -28,6 +28,18 @@ public class Library implements Type {
         return score;
     }
 
+    public Integer getNumOfBooks(){
+        return data.get(LibraryHeading.book_num.toString());
+    }
+
+    public Integer getBooksPerDay(){
+        return data.get(LibraryHeading.books_per_day.toString());
+    }
+
+    public Integer getProcessDays(){
+        return data.get(LibraryHeading.signup_time.toString());
+    }
+
     @Override
     public String getName() {
         return this.name;

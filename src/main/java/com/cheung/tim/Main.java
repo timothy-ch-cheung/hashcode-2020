@@ -21,14 +21,24 @@ public class Main {
     private static final String IN_EXTENSION = ".txt";
     private static final String OUT_EXTENSION = ".out";
 
+    static int daysToProcess;
+
     public static void main(String[] args) throws IOException {
 //        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+//        solve(FILE_A);
+        solve(FILE_B);
         solve(FILE_C);
+        solve(FILE_D);
+        solve(FILE_E);
+        solve(FILE_F);
+
         return;
     }
 
     private static void solve(final String FILE_NAME) throws IOException {
         LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
+
+        daysToProcess = libraryCollection.daysForScanning;
 
         ArrayList<Library> goodLibraries = getGoodLibraries(libraryCollection.libraries, libraryCollection.booksScores);
         ArrayList<LibrarySubmission> librarySubmissions = new ArrayList<>();
@@ -38,32 +48,51 @@ public class Main {
          */
 
         HashMap<Library, Integer> libraryMap = new HashMap<>();
+        HashSet<Integer> booksCounted = new HashSet<>();
         int counter = 0;
         int signUpTime;
         for(int i = 0; i < goodLibraries.size(); i ++) {
             signUpTime = goodLibraries.get(i).data.get(LibraryHeading.signup_time.toString());
             counter += signUpTime;
             if (counter > libraryCollection.daysForScanning){
+//                libraryMap.put(goodLibraries.get(i),counter);
                 break;
             }
             libraryMap.put(goodLibraries.get(i),counter);
 
         }
+        int counterDancho = 0;
+        System.out.println(libraryMap.size());
         for(Map.Entry<Library, Integer> entry : libraryMap.entrySet()) {
+            counterDancho += 1;
+            System.out.println(counterDancho);
+//            if (counterDancho > 2000){
+//                break;
+//            }
             Library key = entry.getKey();
             Integer value = entry.getValue();
             LibrarySubmission librarySubmission = new LibrarySubmission(key.libraryNum);
 //            System.out.println();
 //            System.out.println("Library and days: " + key.libraryNum + " " + value);
 
+
             HashSet<Integer> books;
             for(int i = 0; i < value;i ++) {
                 for(int j = 0; j < key.data.get(LibraryHeading.books_per_day.toString()); j ++) {
                     if (key.books.size() > 0){
                         Integer currentBook = key.books.get(0);
+                        while(booksCounted.contains(currentBook) && key.books.size() >1){
+                            key.books.remove(0);
+                            currentBook = key.books.get(0);
+
+                        }
                         key.books.remove(0);
                         librarySubmission.addBook(currentBook);
+                        booksCounted.add(currentBook);
 //                        System.out.println("Current book: " + currentBook);
+                    }
+                    else{
+                        break;
                     }
 
                 }
@@ -85,11 +114,22 @@ public class Main {
         for(Library li : libraryList){
             Integer score = 0;
             books = li.books;
-            for(Integer i : books){
+            int weight = li.getBooksPerDay() * daysToProcess;
+            int length = books.size() > weight ? weight : books.size();
+            for(Integer i = 0; i < length; i++){
+//                System.out.println("curr: " + bookScores.get(i));
                 score += bookScores.get(i);
             }
-            li.score = score;
+            li.score = score * li.getSignUpTime();
+//            System.out.println("Score: " + score);
         }
+
+//        Collections.sort(libraryList, Comparator.comparingInt(Library::getNumOfBooks));
+
+//        Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
+
+
+        Collections.sort(libraryList, Comparator.comparingInt(Library::getBooksPerDay));
         Collections.sort(libraryList, Comparator.comparingInt(Library::getScore));
         return libraryList;
     }

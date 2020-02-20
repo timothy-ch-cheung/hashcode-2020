@@ -37,7 +37,7 @@ public class HashCodeFileParser {
 //                System.out.println(scores.get(Integer.valueOf(b)));
                 outBooks.add(new Book(Integer.valueOf(b), scores.get(Integer.valueOf(b))));
             }
-            Collections.sort(outBooks,Comparator.comparingInt(Book::getScore));
+            Collections.sort(outBooks,Collections.reverseOrder(Comparator.comparingInt(Book::getScore)));
             ArrayList<Integer> outputBooks = new ArrayList<>();
             for(Book b: outBooks){
                 outputBooks.add(b.bookID);
