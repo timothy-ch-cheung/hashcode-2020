@@ -31,7 +31,7 @@ public class HashCodeFileWriter {
             bw.write(submission.size() + LINE_SEPARATOR);
 
             for(LibrarySubmission t : submission){
-                bw.write(t.getNumBooks() + SPACE + t.getNumBooks() + LINE_SEPARATOR);
+                bw.write(t.getLibrary() + SPACE + t.getNumBooks() + LINE_SEPARATOR);
                 bw.write(t.getBooks() + LINE_SEPARATOR);
             }
 

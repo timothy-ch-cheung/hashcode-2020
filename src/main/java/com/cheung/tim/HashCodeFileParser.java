@@ -19,10 +19,11 @@ public class HashCodeFileParser {
 
         HashMap<Integer, Integer> scores = new HashMap<>();
         for (int i = 0; i < bookScores.length; i++) {
-            System.out.println(bookScores[i]);
+//            System.out.println(bookScores[i]);
             scores.put(i, Integer.valueOf(bookScores[i]));
         }
-        System.out.println(scores);
+//        System.out.println(scores);
+
 
         HashMap<Integer, Library> libraries = new HashMap<>();
         String line;
@@ -33,8 +34,8 @@ public class HashCodeFileParser {
             String[] books = line.split(" ");
             ArrayList<Book> outBooks = new ArrayList<>();
             for(String b: books){
-                System.out.println(scores.get(Integer.valueOf(b)));
-                outBooks.add(new Book(Integer.valueOf(b), scores.get(b)));
+//                System.out.println(scores.get(Integer.valueOf(b)));
+                outBooks.add(new Book(Integer.valueOf(b), scores.get(Integer.valueOf(b))));
             }
             Collections.sort(outBooks,Comparator.comparingInt(Book::getScore));
             ArrayList<Integer> outputBooks = new ArrayList<>();
@@ -45,8 +46,8 @@ public class HashCodeFileParser {
         }
 
         LibraryCollection libraryCollection = new LibraryCollection();
-        libraryCollection.bookNum = headers.get(InputHeading.book_num);
-        libraryCollection.daysForScanning = headers.get(InputHeading.scanning_time);
+        libraryCollection.bookNum = headers.get(InputHeading.book_num.toString());
+        libraryCollection.daysForScanning = headers.get(InputHeading.scanning_time.toString());
         libraryCollection.libraries = libraries;
         libraryCollection.booksScores = scores;
         return libraryCollection;
@@ -62,7 +63,7 @@ public class HashCodeFileParser {
                 headers.put(types[i].getName(), Integer.valueOf(elements[i]));
             }
         } catch (Exception e) {
-            System.out.println(fail);
+//            System.out.println(fail);
             System.out.println(Arrays.toString(elements));
             System.out.println(line);
             throw e;

@@ -22,8 +22,8 @@ public class Main {
     private static final String OUT_EXTENSION = ".out";
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        solve(FILE_A);
+//        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        solve(FILE_C);
         return;
     }
 
@@ -42,22 +42,30 @@ public class Main {
         int signUpTime;
         for(int i = 0; i < goodLibraries.size(); i ++) {
             signUpTime = goodLibraries.get(i).data.get(LibraryHeading.signup_time.toString());
-            libraryMap.put(goodLibraries.get(i),counter + signUpTime);
             counter += signUpTime;
+            if (counter > libraryCollection.daysForScanning){
+                break;
+            }
+            libraryMap.put(goodLibraries.get(i),counter);
+
         }
         for(Map.Entry<Library, Integer> entry : libraryMap.entrySet()) {
             Library key = entry.getKey();
             Integer value = entry.getValue();
             LibrarySubmission librarySubmission = new LibrarySubmission(key.libraryNum);
-            System.out.println("Library and days: " + key.libraryNum + " " + value);
+//            System.out.println();
+//            System.out.println("Library and days: " + key.libraryNum + " " + value);
 
             HashSet<Integer> books;
             for(int i = 0; i < value;i ++) {
                 for(int j = 0; j < key.data.get(LibraryHeading.books_per_day.toString()); j ++) {
-                    Integer currentBook = key.books.get(j);
-                    key.books.remove(j);
-                    librarySubmission.addBook(currentBook);
-                    System.out.println("Current book: " + currentBook);
+                    if (key.books.size() > 0){
+                        Integer currentBook = key.books.get(0);
+                        key.books.remove(0);
+                        librarySubmission.addBook(currentBook);
+//                        System.out.println("Current book: " + currentBook);
+                    }
+
                 }
             }
             librarySubmissions.add(librarySubmission);
