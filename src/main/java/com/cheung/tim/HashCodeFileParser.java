@@ -1,16 +1,11 @@
 package com.cheung.tim;
 
-import com.cheung.tim.input.model.InputHeading;
-import com.cheung.tim.input.model.Library;
-import com.cheung.tim.input.model.LibraryCollection;
-import com.cheung.tim.input.model.LibraryHeading;
+import com.cheung.tim.input.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class HashCodeFileParser {
 
@@ -22,6 +17,13 @@ public class HashCodeFileParser {
 
         String[] bookScores = reader.readLine().split(" ");
 
+        HashMap<Integer, Integer> scores = new HashMap<>();
+        for (int i = 0; i < bookScores.length; i++) {
+            System.out.println(bookScores[i]);
+            scores.put(i, Integer.valueOf(bookScores[i]));
+        }
+        System.out.println(scores);
+
         HashMap<Integer, Library> libraries = new HashMap<>();
         String line;
         for (int i = 0; i < library_num; i++) {
@@ -29,13 +31,19 @@ public class HashCodeFileParser {
             HashMap<String, Integer> libraryData = (HashMap<String, Integer>) parseRow(line, LibraryHeading.values());
             line = reader.readLine();
             String[] books = line.split(" ");
-            libraries.put(i, new Library(libraryData, i, books));
+            ArrayList<Book> outBooks = new ArrayList<>();
+            for(String b: books){
+                System.out.println(scores.get(Integer.valueOf(b)));
+                outBooks.add(new Book(Integer.valueOf(b), scores.get(b)));
+            }
+            Collections.sort(outBooks,Comparator.comparingInt(Book::getScore));
+            ArrayList<Integer> outputBooks = new ArrayList<>();
+            for(Book b: outBooks){
+                outputBooks.add(b.bookID);
+            }
+            libraries.put(i, new Library(libraryData, i, outputBooks));
         }
 
-        HashMap<Integer, Integer> scores = new HashMap<>();
-        for (int i = 0; i < scores.size(); i++) {
-            scores.put(i, Integer.valueOf(bookScores[i]));
-        }
         LibraryCollection libraryCollection = new LibraryCollection();
         libraryCollection.bookNum = headers.get(InputHeading.book_num);
         libraryCollection.daysForScanning = headers.get(InputHeading.scanning_time);

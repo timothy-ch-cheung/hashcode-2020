@@ -3,6 +3,7 @@ package com.cheung.tim;
 import com.cheung.tim.input.model.Library;
 import com.cheung.tim.input.model.LibraryCollection;
 import com.cheung.tim.input.model.LibraryHeading;
+import com.cheung.tim.output.model.LibrarySubmission;
 
 import java.io.IOException;
 import java.util.*;
@@ -22,7 +23,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        solve(FILE_D);
+        solve(FILE_A);
         return;
     }
 
@@ -30,7 +31,7 @@ public class Main {
         LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
 
         ArrayList<Library> goodLibraries = getGoodLibraries(libraryCollection.libraries, libraryCollection.booksScores);
-
+        ArrayList<LibrarySubmission> librarySubmissions = new ArrayList<>();
 
         /**
          * (library, days)
@@ -47,7 +48,7 @@ public class Main {
         for(Map.Entry<Library, Integer> entry : libraryMap.entrySet()) {
             Library key = entry.getKey();
             Integer value = entry.getValue();
-
+            LibrarySubmission librarySubmission = new LibrarySubmission(key.libraryNum);
             System.out.println("Library and days: " + key.libraryNum + " " + value);
 
             HashSet<Integer> books;
@@ -55,18 +56,34 @@ public class Main {
                 for(int j = 0; j < key.data.get(LibraryHeading.books_per_day.toString()); j ++) {
                     Integer currentBook = key.books.get(j);
                     key.books.remove(j);
-
+                    librarySubmission.addBook(currentBook);
                     System.out.println("Current book: " + currentBook);
                 }
-
             }
+            librarySubmissions.add(librarySubmission);
         }
-
+        HashCodeFileWriter.write(getOutFileName(FILE_NAME), librarySubmissions);
 
     }
 
     private static ArrayList<Library> getGoodLibraries(HashMap<Integer, Library> libraries, HashMap<Integer, Integer> bookScores) {
-        return new ArrayList<Library>();
+        ArrayList<Library> libraryList = new ArrayList();
+        for (Library li: libraries.values()){
+            libraryList.add(li);
+        }
+        //Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
+        HashMap<Integer, Integer> libraryScore;
+        ArrayList<Integer> books;
+        for(Library li : libraryList){
+            Integer score = 0;
+            books = li.books;
+            for(Integer i : books){
+                score += bookScores.get(i);
+            }
+            li.score = score;
+        }
+        Collections.sort(libraryList, Comparator.comparingInt(Library::getScore));
+        return libraryList;
     }
 
     public static String getInFileName(String name) {

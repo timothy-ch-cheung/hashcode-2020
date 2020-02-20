@@ -9,14 +9,15 @@ public class LibrarySubmission {
     private Integer booksForScanning;
     private ArrayList<Integer> books;
 
-    public LibrarySubmission(Integer libraryNum, Integer booksForScanning){
+    public LibrarySubmission(Integer libraryNum){
         this.libraryNum = libraryNum;
-        this.booksForScanning = booksForScanning;
+        this.booksForScanning = 0;
         this.books = new ArrayList<>();
     }
 
     public void addBook(Integer ride){
         this.books.add(ride);
+        this.booksForScanning += 1;
     }
 
     public String getBooks(){
