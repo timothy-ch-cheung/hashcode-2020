@@ -1,11 +1,10 @@
 package com.cheung.tim;
 
 import com.cheung.tim.input.model.LibraryCollection;
-import com.cheung.tim.input.model.TaxiRank;
 import com.cheung.tim.output.model.LibrarySubmission;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
 
 public class Main {
 
