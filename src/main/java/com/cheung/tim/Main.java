@@ -1,9 +1,8 @@
 package com.cheung.tim;
 
-import com.cheung.tim.input.model.InputHeading;
 import com.cheung.tim.input.model.LibraryCollection;
 import com.cheung.tim.input.model.TaxiRank;
-import com.cheung.tim.output.model.Taxi;
+import com.cheung.tim.output.model.LibrarySubmission;
 
 import java.io.IOException;
 import java.util.*;
@@ -28,7 +27,7 @@ public class Main {
 
     private static void solve(final String FILE_NAME) throws IOException {
         LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
-        HashMap<Integer, Taxi> schedule = new HashMap<>();
+        HashMap<Integer, LibrarySubmission> schedule = new HashMap<>();
 
     }
 
