@@ -11,12 +11,12 @@ public class Main {
 
     private static final String BASE_DIR = "src/main/resources/";
     private static final String FILE_A = "a_example";
-    private static final String FILE_B = "b_should_be_easy";
-    private static final String FILE_C = "c_no_hurry";
-    private static final String FILE_D = "d_metropolis";
-    private static final String FILE_E = "e_high_bonus";
+    private static final String FILE_B = "b_read_on";
+    private static final String FILE_C = "c_incunabula";
+    private static final String FILE_D = "d_tough_choices";
+    private static final String FILE_E = "e_so_many_books";
 
-    private static final String IN_EXTENSION = ".in";
+    private static final String IN_EXTENSION = ".txt";
     private static final String OUT_EXTENSION = ".out";
 
     public static void main(String[] args) throws IOException {
