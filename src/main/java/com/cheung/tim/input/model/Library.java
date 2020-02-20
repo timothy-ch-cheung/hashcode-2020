@@ -11,6 +11,7 @@ public class Library implements Type {
     public HashSet<Integer> books;
 
     public Library(Map<String, Integer> data, Integer libraryNum, String... books) {
+        this.libraryNum = libraryNum;
         this.data = data;
         this.books = new HashSet<>();
         for (String book : books) {
@@ -20,6 +21,10 @@ public class Library implements Type {
     }
 
     String name;
+
+    public Integer getSignUpTime(){
+        return data.get(LibraryHeading.signup_time.toString());
+    }
 
     @Override
     public String getName() {

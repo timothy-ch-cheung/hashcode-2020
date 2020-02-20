@@ -41,6 +41,7 @@ public class Main {
         for (Library li: libraries.values()){
             libraryList.add(li);
         }
+        Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
 
         return libraryList;
     }
