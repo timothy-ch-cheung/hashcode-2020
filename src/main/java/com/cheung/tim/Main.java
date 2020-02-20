@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        solve(FILE_F);
+        solve(FILE_D);
         return;
     }
 

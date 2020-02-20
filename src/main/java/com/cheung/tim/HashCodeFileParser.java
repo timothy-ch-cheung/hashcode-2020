@@ -20,6 +20,8 @@ public class HashCodeFileParser {
         Map<String, Integer> headers = parseRow(reader.readLine(), InputHeading.values());
         int library_num = headers.get(InputHeading.library_num.toString());
 
+        String[] bookScores = reader.readLine().split(" ");
+
         HashMap <Integer, Library> libraries = new HashMap<>();
         String line;
         for(int i = 0; i < library_num; i++){
@@ -29,10 +31,16 @@ public class HashCodeFileParser {
             String[] books = line.split(" ");
             libraries.put(i, new Library(libraryData, books));
         }
+
+        HashMap<Integer,Integer> scores = new HashMap<>();
+        for(int i = 0; i < scores.size(); i++){
+            scores.put(i, Integer.valueOf(bookScores[i]));
+        }
         LibraryCollection libraryCollection = new LibraryCollection();
         libraryCollection.bookNum = headers.get(InputHeading.book_num);
         libraryCollection.daysForScanning = headers.get(InputHeading.scanning_time);
         libraryCollection.libraries = libraries;
+        libraryCollection.booksScores = scores;
         return libraryCollection;
     }
 
@@ -50,6 +58,7 @@ public class HashCodeFileParser {
             System.out.println(fail);
             System.out.println(Arrays.toString(elements));
             System.out.println(line);
+            throw e;
         }
         return headers;
     }
