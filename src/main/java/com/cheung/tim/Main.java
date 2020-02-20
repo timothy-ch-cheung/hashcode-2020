@@ -4,6 +4,7 @@ import com.cheung.tim.input.model.LibraryCollection;
 import com.cheung.tim.output.model.LibrarySubmission;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -27,8 +28,15 @@ public class Main {
 
     private static void solve(final String FILE_NAME) throws IOException {
         LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
-        HashMap<Integer, LibrarySubmission> schedule = new HashMap<>();
 
+        ArrayList<Integer> goodLibraries = getGoodLibraries();
+
+
+
+    }
+
+    private static ArrayList<Integer> getGoodLibraries() {
+        return new ArrayList<Integer>();
     }
 
     public static String getInFileName(String name) {
