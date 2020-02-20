@@ -4,10 +4,7 @@ import com.cheung.tim.input.model.Library;
 import com.cheung.tim.input.model.LibraryCollection;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
 
@@ -41,8 +38,18 @@ public class Main {
         for (Library li: libraries.values()){
             libraryList.add(li);
         }
-        Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
-
+        //Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
+        HashMap<Integer, Integer> libraryScore;
+        HashSet<Integer> books;
+        for(Library li : libraryList){
+            Integer score = 0;
+            books = li.books;
+            for(Integer i : books){
+                score += bookScores.get(i);
+            }
+            li.score = score;
+        }
+        Collections.sort(libraryList, Comparator.comparingInt(Library::getScore));
         return libraryList;
     }
 

@@ -9,6 +9,7 @@ public class Library implements Type {
     public Integer libraryNum;
     public Map<String, Integer> data;
     public HashSet<Integer> books;
+    public Integer score;
 
     public Library(Map<String, Integer> data, Integer libraryNum, String... books) {
         this.libraryNum = libraryNum;
@@ -24,6 +25,10 @@ public class Library implements Type {
 
     public Integer getSignUpTime(){
         return data.get(LibraryHeading.signup_time.toString());
+    }
+
+    public Integer getScore(){
+        return score;
     }
 
     @Override
