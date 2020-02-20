@@ -2,12 +2,10 @@ package com.cheung.tim;
 
 import com.cheung.tim.input.model.Library;
 import com.cheung.tim.input.model.LibraryCollection;
+import com.cheung.tim.input.model.LibraryHeading;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main {
 
@@ -34,16 +32,41 @@ public class Main {
         ArrayList<Library> goodLibraries = getGoodLibraries(libraryCollection.libraries, libraryCollection.booksScores);
 
 
+        /**
+         * (library, days)
+         */
+
+        HashMap<Library, Integer> libraryMap = new HashMap<>();
+        int counter = 0;
+        int signUpTime;
+        for(int i = 0; i < goodLibraries.size(); i ++) {
+            signUpTime = goodLibraries.get(i).data.get(LibraryHeading.signup_time.toString());
+            libraryMap.put(goodLibraries.get(i),counter + signUpTime);
+            counter += signUpTime;
+        }
+        for(Map.Entry<Library, Integer> entry : libraryMap.entrySet()) {
+            Library key = entry.getKey();
+            Integer value = entry.getValue();
+
+            System.out.println("Library and days: " + key.libraryNum + " " + value);
+
+            HashSet<Integer> books;
+            for(int i = 0; i < value;i ++) {
+                for(int j = 0; j < key.data.get(LibraryHeading.books_per_day.toString()); j ++) {
+                    Integer currentBook = key.books.get(j);
+                    key.books.remove(j);
+
+                    System.out.println("Current book: " + currentBook);
+                }
+
+            }
+        }
+
+
     }
 
     private static ArrayList<Library> getGoodLibraries(HashMap<Integer, Library> libraries, HashMap<Integer, Integer> bookScores) {
-        ArrayList<Library> libraryList = new ArrayList();
-        for (Library li: libraries.values()){
-            libraryList.add(li);
-        }
-        Collections.sort(libraryList, Comparator.comparingInt(Library::getSignUpTime));
-
-        return libraryList;
+        return new ArrayList<Library>();
     }
 
     public static String getInFileName(String name) {
