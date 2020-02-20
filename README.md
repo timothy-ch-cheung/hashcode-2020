@@ -1,1 +1,1 @@
-# hashcode-2020
+# google-hashcode-template
