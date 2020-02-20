@@ -22,18 +22,18 @@ public class HashCodeFileParser {
 
         String[] bookScores = reader.readLine().split(" ");
 
-        HashMap <Integer, Library> libraries = new HashMap<>();
+        HashMap<Integer, Library> libraries = new HashMap<>();
         String line;
-        for(int i = 0; i < library_num; i++){
+        for (int i = 0; i < library_num; i++) {
             line = reader.readLine();
             HashMap<String, Integer> libraryData = (HashMap<String, Integer>) parseRow(line, LibraryHeading.values());
             line = reader.readLine();
             String[] books = line.split(" ");
-            libraries.put(i, new Library(libraryData, books));
+            libraries.put(i, new Library(libraryData, i, books));
         }
 
-        HashMap<Integer,Integer> scores = new HashMap<>();
-        for(int i = 0; i < scores.size(); i++){
+        HashMap<Integer, Integer> scores = new HashMap<>();
+        for (int i = 0; i < scores.size(); i++) {
             scores.put(i, Integer.valueOf(bookScores[i]));
         }
         LibraryCollection libraryCollection = new LibraryCollection();
@@ -53,8 +53,7 @@ public class HashCodeFileParser {
                 fail = i;
                 headers.put(types[i].getName(), Integer.valueOf(elements[i]));
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(fail);
             System.out.println(Arrays.toString(elements));
             System.out.println(line);
