@@ -1,5 +1,6 @@
 package com.cheung.tim;
 
+import com.cheung.tim.input.model.Library;
 import com.cheung.tim.input.model.LibraryCollection;
 import com.cheung.tim.output.model.LibrarySubmission;
 
@@ -29,13 +30,12 @@ public class Main {
     private static void solve(final String FILE_NAME) throws IOException {
         LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
 
-        ArrayList<Integer> goodLibraries = getGoodLibraries();
-
+        ArrayList<Integer> goodLibraries = getGoodLibraries(libraryCollection.libraries, libraryCollection.booksScores);
 
 
     }
 
-    private static ArrayList<Integer> getGoodLibraries() {
+    private static ArrayList<Integer> getGoodLibraries(HashMap<Integer, Library> libraries, HashMap<Integer, Integer> bookScores) {
         return new ArrayList<Integer>();
     }
 
