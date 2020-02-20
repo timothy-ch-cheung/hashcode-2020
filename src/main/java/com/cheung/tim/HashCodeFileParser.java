@@ -1,14 +1,15 @@
 package com.cheung.tim;
 
-import com.cheung.tim.input.model.*;
+import com.cheung.tim.input.model.InputHeading;
+import com.cheung.tim.input.model.Library;
+import com.cheung.tim.input.model.LibraryCollection;
+import com.cheung.tim.input.model.LibraryHeading;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class HashCodeFileParser {
@@ -17,7 +18,7 @@ public class HashCodeFileParser {
         BufferedReader reader = new BufferedReader(new FileReader(filename));
 
         Map<String, Integer> headers = parseRow(reader.readLine(), InputHeading.values());
-        int library_num = headers.get(InputHeading.library_num);
+        int library_num = headers.get(InputHeading.library_num.toString());
 
         HashMap <Integer, Library> libraries = new HashMap<>();
         String line;
@@ -38,8 +39,17 @@ public class HashCodeFileParser {
     private static Map<String, Integer> parseRow(String line, Type[] types) {
         Map<String, Integer> headers = new HashMap<>();
         String[] elements = line.split(" ");
-        for (int i = 0; i < types.length; i++) {
-            headers.put(types[i].getName(), Integer.valueOf(elements[i]));
+        int fail = 0;
+        try {
+            for (int i = 0; i < types.length; i++) {
+                fail = i;
+                headers.put(types[i].getName(), Integer.valueOf(elements[i]));
+            }
+        }
+        catch (Exception e){
+            System.out.println(fail);
+            System.out.println(Arrays.toString(elements));
+            System.out.println(line);
         }
         return headers;
     }
