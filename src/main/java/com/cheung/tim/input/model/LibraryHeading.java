@@ -2,14 +2,14 @@ package com.cheung.tim.input.model;
 
 import com.cheung.tim.Type;
 
-public enum InputHeading implements Type {
+public enum LibraryHeading implements Type {
     book_num("book_num"),
-    library_num("library_num"),
-    scanning_time("scanning_time");
+    signup_time("signup_time"),
+    books_per_day("books_per_day");
 
     String name;
 
-    InputHeading(String name) {
+    LibraryHeading(String name) {
         this.name = name;
     }
 

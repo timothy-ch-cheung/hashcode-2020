@@ -1,6 +1,7 @@
 package com.cheung.tim;
 
 import com.cheung.tim.input.model.InputHeading;
+import com.cheung.tim.input.model.LibraryCollection;
 import com.cheung.tim.input.model.TaxiRank;
 import com.cheung.tim.output.model.Taxi;
 
@@ -26,26 +27,9 @@ public class Main {
     }
 
     private static void solve(final String FILE_NAME) throws IOException {
-        TaxiRank taxiRank = HashCodeFileParser.read(getInFileName(FILE_NAME));
-        System.out.println(taxiRank);
-
-        Map<String, Integer> headers = taxiRank.getHeader();
-        List<Map<String, Integer>> rides = taxiRank.getRides();
-
+        LibraryCollection libraryCollection = HashCodeFileParser.read(getInFileName(FILE_NAME));
         HashMap<Integer, Taxi> schedule = new HashMap<>();
 
-        for (int i = 0; i < headers.get(InputHeading.vehicles.toString()); i++) {
-            schedule.put(i, new Taxi(i));
-        }
-
-        Random r = new Random();
-
-        for (Map<String, Integer> ride : rides) {
-            int choice = r.nextInt(headers.get(InputHeading.vehicles.toString()));
-            schedule.get(choice).addRide(ride.get("id"));
-        }
-
-        HashCodeFileWriter.write(getOutFileName(FILE_NAME), new ArrayList(schedule.values()));
     }
 
     public static String getInFileName(String name) {
